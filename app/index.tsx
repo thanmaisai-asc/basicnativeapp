@@ -25,6 +25,13 @@ export default function Index() {
       }}
     >
       <Text style={styles.bigBlue}>Edit app/index.tsx to edit this screen.</Text>
+      <View
+        style={{
+          width: 100,
+          height: 100,
+          backgroundColor: 'skyblue',
+        }}
+      />
     </View>
   );
 }
