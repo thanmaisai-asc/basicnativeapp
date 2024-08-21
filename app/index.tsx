@@ -1,84 +1,82 @@
-import React, {Component} from 'react';
-import {
-  Alert,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 
-export default class Touchables extends Component {
-  _onPressButton() {
-    Alert.alert('You tapped the button!');
-  }
+const data = [
+  {key: '1', name: 'John Doe', age: 30, profession: 'Developer'},
+  {key: '2', name: 'Jane Smith', age: 25, profession: 'Designer'},
+  {key: '3', name: 'John Doe', age: 30, profession: 'Developer'},
+  {key: '4', name: 'Jane Smith', age: 25, profession: 'Designer'},
+  {key: '5', name: 'John Doe', age: 30, profession: 'Developer'},
+  {key: '6', name: 'Jane Smith', age: 25, profession: 'Designer'},
+  {key: '7', name: 'John Doe', age: 30, profession: 'Developer'},
+  {key: '8', name: 'Jane Smith', age: 25, profession: 'Designer'},
+  {key: '9', name: 'John Doe', age: 30, profession: 'Developer'},
+  {key: '10', name: 'Jane Smith', age: 25, profession: 'Designer'},
 
-  _onLongPressButton() {
-    Alert.alert('You long-pressed the button!');
-  }
+];
 
+class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableHighlight onPress={this._onPressButton} underlayColor="white">
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>TouchableHighlight</Text>
-          </View>
-        </TouchableHighlight>
-        <TouchableOpacity onPress={this._onPressButton}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>TouchableOpacity</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableNativeFeedback
-          onPress={this._onPressButton}
-          background={
-            Platform.OS === 'android'
-              ? TouchableNativeFeedback.SelectableBackground()
-              : undefined
-          }>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>
-              TouchableNativeFeedback{' '}
-              {Platform.OS !== 'android' ? '(Android only)' : ''}
-            </Text>
-          </View>
-        </TouchableNativeFeedback>
-        <TouchableWithoutFeedback onPress={this._onPressButton}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>TouchableWithoutFeedback</Text>
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableHighlight
-          onPress={this._onPressButton}
-          onLongPress={this._onLongPressButton}
-          underlayColor="white">
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>Touchable with Long Press</Text>
-          </View>
-        </TouchableHighlight>
+        <FlatList
+          data={data}
+          renderItem={({ item }) => (
+            <View style={styles.item}>
+              <Text style={styles.name}>Name: {item.name}</Text>
+              <Text style={styles.info}>Age: {item.age}</Text>
+              <Text style={styles.info}>Profession: {item.profession}</Text>
+            </View>
+          )}
+          ItemSeparatorComponent={this.renderSeparator}
+        />
       </View>
     );
   }
+
+  renderSeparator = () => {
+    return (
+      <View
+        style={styles.separator}
+      />
+    );
+  };
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 60,
-    alignItems: 'center',
+    flex: 1,
+    paddingTop: 22,
+    backgroundColor: '#f0f0f0', // Light grey background
   },
-  button: {
-    marginBottom: 30,
-    width: 260,
-    alignItems: 'center',
-    backgroundColor: '#2196F3',
+  item: {
+    padding: 15,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    backgroundColor: '#ffffff', // White background for items
+    borderRadius: 10, // Rounded corners for items
+    shadowColor: '#000', // Shadow for elevation effect
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3, // Elevation for Android
   },
-  buttonText: {
-    textAlign: 'center',
-    padding: 20,
-    color: 'white',
+  name: {
+    fontSize: 22,
+    fontWeight: '600', // Slightly less bold
+    color: '#333333', // Darker text color
+    marginBottom: 8,
+  },
+  info: {
+    fontSize: 18,
+    color: '#666666', // Grey text color for less emphasis
+  },
+  separator: {
+    height: 1,
+    width: "86%",
+    backgroundColor: "#CED0CE",
+    marginLeft: "14%",
   },
 });
+
+export default App;
